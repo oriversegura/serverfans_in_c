@@ -1,35 +1,35 @@
-### Introduction
+# Introduction
 
 This C script demonstrates how to use IPMITOOL to control the fan speeds of a server. IPMITOOL is a command-line interface for managing IPMI-compliant devices, including servers, workstations, and blade systems.
 
-#### Prerequisites
+## Prerequisites
 
 - A server with IPMI support.
 - IPMITOOL installed on your system.
 - Same network as the server.
 - Credentials of IPMI user with power user privileges.
 
-### Breakdown:
+## Breakdown
 
-# Get User Input:
+### Get User Input
 
 Prompts the user for the server's IP address, Username and password.
 Select the fan speed to set.
 
-# Construct Commands:
+### Construct Commands
 
 Builds the IPMITOOL commands using the provided input.
 
-# Execute Commands:
+### Execute Commands
 
 Forks child processes to execute each IPMITOOL command asynchronously.
 Waits for each child process to finish.
 
-# Error Handling:
+### Error Handling
 
 Uses perror to print error messages if execvp or fork fail.
 
-# Explanation of IPMITOOL Commands
+### Explanation of IPMITOOL Commands
 
 ipmitool I lanplus: Selects the LAN+ interface for IPMI communication.
 -H address: Specifies the server's IP address.
@@ -41,7 +41,7 @@ raw 0x30 0x30: Specifies the raw command to execute.
 0x02: Sets the command's data.
 0xff fan: Sets the fan speed.
 
-# Usage
+### Usage
 
 - Compile the C code.
 - Run the compiled executable.
@@ -52,7 +52,7 @@ raw 0x30 0x30: Specifies the raw command to execute.
 - Add error handling for invalid input or unexpected responses from the server.
 - Consider using a configuration file to store server details and fan speed options.
 
-#Additional Notes
+### Additional Notes
 
 - Ensure that IPMITOOL is installed and configured correctly on your system.
 - Refer to the IPMITOOL documentation for more details on available commands and options.
