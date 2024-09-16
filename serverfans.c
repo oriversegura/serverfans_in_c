@@ -17,7 +17,7 @@
 int main (void) 
 {
   // variables to use
-  char address[20], user[20], fan[10];
+  char address[20], fan[10], user[20];
   char *password;
 
   // Message to user to set the ip of the server
