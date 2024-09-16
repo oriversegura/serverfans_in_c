@@ -3,7 +3,6 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-
   //Enumeration options
   enum FanSpeed {
     FAN_SPEED_20 = 1,
@@ -29,10 +28,7 @@ int main (void)
   scanf("%s", user);   
 
   // Get Password of the server
-  //printf("Enter Server Password: \n");
-  //scanf("%s", password);
   password = getpass("Enter Server Password: \n");
-
 
   //Declare variable option
   int option;  
@@ -48,7 +44,6 @@ int main (void)
 
   // get option to set fan speed
   scanf("%d", &option);   
-
 
 // capture fan speed to set
     switch (option){
@@ -81,7 +76,6 @@ int main (void)
       break;
     }
 
-
 // exec fan command complete
 pid_t pid1 = fork();
   if (pid1 == 0) 
@@ -111,3 +105,4 @@ pid_t pid1 = fork();
   // end program
   printf("Program finished correctly!\n");
 }
+
