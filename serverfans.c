@@ -3,15 +3,15 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-  //Enumeration options
-  enum FanSpeed {
-    FAN_SPEED_20 = 1,
-    FAN_SPEED_30 = 2,
-    FAN_SPEED_50 = 3,
-    FAN_SPEED_80 = 4,
-    FAN_SPEED_100 = 5
+//Enumeration options
+enum FanSpeed {
+  FAN_SPEED_20 = 1,
+  FAN_SPEED_30 = 2,
+  FAN_SPEED_50 = 3,
+  FAN_SPEED_80 = 4,
+  FAN_SPEED_100 = 5
 
-  };
+};
 
 int main (void) 
 {
@@ -45,8 +45,8 @@ int main (void)
   // get option to set fan speed
   scanf("%d", &option);   
 
-// capture fan speed to set
-    switch (option){
+  // capture fan speed to set
+  switch (option){
     case FAN_SPEED_20:
       strcpy(fan, "0x14");
       printf("Setting fan speed to 20 percent\n");
@@ -74,23 +74,24 @@ int main (void)
     default:
       printf("Invalid option selected. Exiting...\n");
       break;
-    }
+  }
 
-// exec fan command complete
-pid_t pid1 = fork();
+  // exec fan command complete
+  // Process 1
+  pid_t pid1 = fork();
   if (pid1 == 0) 
   {
-  char* args1[] = {"ipmitool", "-I", "lanplus", "-H", address, "-U", user, "-P", password, "raw", "0x30", "0x30", "0x01", "0x00", NULL};  
-  printf("\n");
-  execvp("ipmitool", args1);
-  perror("execvp");            
+    char* args1[] = {"ipmitool", "-I", "lanplus", "-H", address, "-U", user, "-P", password, "raw", "0x30", "0x30", "0x01", "0x00", NULL};  
+    printf("\n");
+    execvp("ipmitool", args1);
+    perror("execvp");            
   }
   else if (pid1 < 0)
   {
-  perror("fork");
-  exit(EXIT_FAILURE);
+    perror("fork");
+    exit(EXIT_FAILURE);
   }
-
+  // Process 2
   pid_t pid2 = fork();
   if (pid2 == 0) {
     char* args2[] = {"ipmitool", "-I", "lanplus", "-H", address, "-U", user, "-P", password, "raw", "0x30", "0x30", "0x02", "0xff", fan, NULL};
