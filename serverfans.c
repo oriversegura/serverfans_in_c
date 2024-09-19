@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <regex.h>
 
 // Enumeration options
 enum FanSpeed {
@@ -40,8 +41,25 @@ int main(void) {
   // Message to user to set the ip of the server
   printf("Enter Server Address: \n");
   scanf("%s", address);
+  const char *regex_pattern = "^((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\\.){3}(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])$";
+  regex_t compiled_regex;
+  int validation;
 
-  // Message to user to set the ip of the server
+  //Compile regular expression to validate ipv4
+  if (regcomp(&compiled_regex, regex_pattern, REG_EXTENDED))
+      {
+          printf("Error to compile regular expression! \n");
+          return 5;
+      }
+  // Check valid ipv4 with regular expression
+  validation = regexec(&compiled_regex, address, 0, NULL, 0);
+  if (validation == REG_NOMATCH)
+      {
+          printf("Insert a valid Ip Address \n");
+          return 10;
+      }
+
+  // Message to set the user of the server
   printf("Enter Server User: \n");
   scanf("%s", user);
 
@@ -131,6 +149,9 @@ int main(void) {
 
   // Delete Enviroment Variable before program end
   unsetenv("PASSWORD_IPMI");
+
+  //free resources of regex
+  regfree(&compiled_regex);
 
   // Fan Speed its correct set Message
   printf("Fan Speed set successfully!\n");
