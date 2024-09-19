@@ -14,8 +14,18 @@ enum FanSpeed {
 
 };
 
+
 int main (void)
 {
+   //check ipmi is installed
+   int status = access("/usr/local/bin/ipmitool", X_OK);
+   if (status != 0)
+       {
+           printf("Ipmitool not installed on system \n");
+           printf("Program will be closed! \n");
+           exit(EXIT_FAILURE);
+       }
+
   // variables to use
   char address[20], fan[10], user[20];
   char *password;
