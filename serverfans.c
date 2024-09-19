@@ -14,14 +14,13 @@ enum FanSpeed {
 
 };
 
-
 int main (void)
 {
    //check ipmi is installed
    int status = access("/usr/local/bin/ipmitool", X_OK);
    if (status != 0)
        {
-           printf("Ipmitool not installed on system \n");
+           printf("Ipmitool not installed on the system! \n");
            printf("Program will be closed! \n");
            exit(EXIT_FAILURE);
        }
@@ -41,14 +40,14 @@ int main (void)
   // Get Password of the server
   password = getpass("Enter Server Password: \n");
   if (setenv("PASSWORD_IPMI", password, 1) != 0){
-      perror("Error in set enviroment variable");
+      perror("Error in set enviroment variable \n");
       return 1;
   }
 
-  //Get and use password
+  //Get and use password from enviroment variable
   char *password_env = getenv("PASSWORD_IPMI");
 
-  //Declare variable option
+  //Declare variable for chose option
   int option;
 
   // print options
@@ -63,7 +62,7 @@ int main (void)
   // get option to set fan speed
   scanf("%d", &option);
 
-  // capture fan speed to set
+  // capture fan speed to set in RAW
   switch (option){
     case FAN_SPEED_20:
       strcpy(fan, "0x14");
@@ -94,7 +93,7 @@ int main (void)
       break;
   }
 
-  // exec fan command complete
+  // exec fan set command complete
   // Process 1
   pid_t pid1 = fork();
   if (pid1 == 0)
@@ -119,11 +118,11 @@ int main (void)
     perror("fork");
     exit(EXIT_FAILURE);
   }
-  //Delete Enviroment Variable at End
+
+  //Delete Enviroment Variable before program end
   unsetenv("PASSWORD_IPMI");
 
-  //Fan Speed set Message
-  printf("Fan Speed Set successfully!\n");
-  // end program
-  printf("Program finished correctly!\n");
+  //Fan Speed its correct set Message
+  printf("Fan Speed set successfully!\n");
+
 }
