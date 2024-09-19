@@ -13,18 +13,22 @@ enum FanSpeed {
 
 };
 
+//Macros to coding clarity
+#define PATH_LEN 2
+
 int main(void) {
 
   // check IPMI is installed all systems path
   char *path[] = {"/usr/bin/ipmitool", "/usr/local/bin/ipmitool",
                   "C:\\ipmitool"};
   int i;
-  for (i = 0; i < 3; i++) {
+  //Check if found the app in any of the followin paths
+  for (i = 0; i <= PATH_LEN; i++) {
     if (access(path[i], X_OK) == 0) {
       printf("Ipmitool is installed on the system!\n");
     } else {
-      if (i > 2 && access(path[i], X_OK) != 0) {
-        printf("Ipmitool is not installed on the system!\n");
+        if (i > PATH_LEN && access(path[i], X_OK) != 0) {
+            printf("Ipmitool is not installed on the system!\n");
       }
     }
   }
