@@ -67,7 +67,7 @@ int main(void) {
   password = getpass("Enter Server Password: \n");
   if (setenv("PASSWORD_IPMI", password, 1) != 0) {
     perror("Error in set enviroment variable \n");
-    return 1;
+    return 15;
   }
 
   // Get and use password from enviroment variable
@@ -155,4 +155,7 @@ int main(void) {
 
   // Fan Speed its correct set Message
   printf("Fan Speed set successfully!\n");
+
+  //return of the main function
+  return 0;
 }
