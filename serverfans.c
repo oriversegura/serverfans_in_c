@@ -14,16 +14,18 @@ enum FanSpeed {
 };
 
 int main(void) {
+
   // check IPMI is installed all systems path
-  char *path[] = {"/usr/bin/ipmitool", "/usr/local/bin/ipmitool", "C:\\ipmitool"};
+  char *path[] = {"/usr/bin/ipmitool", "/usr/local/bin/ipmitool",
+                  "C:\\ipmitool"};
   int i;
   for (i = 0; i < 3; i++) {
     if (access(path[i], X_OK) == 0) {
-        printf("Ipmitool is installed on the system!\n");
+      printf("Ipmitool is installed on the system!\n");
     } else {
-        if (i > 2 && access(path[i], X_OK) != 0) {
+      if (i > 2 && access(path[i], X_OK) != 0) {
         printf("Ipmitool is not installed on the system!\n");
-        }
+      }
     }
   }
 
@@ -88,10 +90,11 @@ int main(void) {
     break;
   case 6:
     printf("Exiting...\n");
-    exit(1);
+    exit(5);
     break;
   default:
-    printf("Invalid option selected. Exiting...\n");
+    printf("Invalid option selected. Program will be quit! \n");
+    exit(10);
     break;
   }
 
